@@ -14,3 +14,5 @@ use [superagent](https://github.com/visionmedia/superagent) to mock http request
 - [express guide](https://github.com/azat-co/expressjsguide/blob/master/res/app.js)
 
 - [start-a-new-node-js-express-app-the-right-way/](http://www.bearfruit.org/2013/06/21/start-a-new-node-js-express-app-the-right-way/)
+
+- [express 3x/api](http://expressjs.com/3x/api.html) | [express 4x/api](http://expressjs.com/4x/api.html)
