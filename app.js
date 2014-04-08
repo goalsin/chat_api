@@ -10,8 +10,8 @@ var routes = require('./routes');
 var users = require('./routes/user');
 
 var app = express();
-var redis = require('redis');
-var db = redis.createClient();
+// var redis = require('redis');
+// var db = redis.createClient();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
