@@ -2,10 +2,9 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 
 var routes = require('../routes');
+var redis = require("redis");
 
-var user_model = require('../models/user_model');
-
-describe('my first suite', function() {
+describe('redis test', function() {
 
 　　beforeEach(function() {
 　　　　console.log('setup');
@@ -16,22 +15,25 @@ describe('my first suite', function() {
 　　});
 
 　　before(function() {
-　　　　console.log('before');
+　　　　console.log('before createClient');
+	   client = redis.createClient();
+
 　　});
 
 　　after(function() {
 　　　　console.log('after');
 　　});
 
-　　it('should be my user model test', function() {
+　　it('should be my first test', function() {
 　　　　expect(1).to.equal(1);
-　　　　console.log('test');
+	   client = redis.createClient();
+	   setTimeout(function(){
+	   	　console.log('client='+client.print);
+	   },500);
 
-	   var b = user_model.add('alfred sang',28);
-	   expect(true).to.equal(b);
 　　});
 
-// 　　describe('inner suite', function() {
+　　// describe('inner suite', function() {
 // 　　　　it('should be my second test', function() {
 // 　　　　　　expect(2).to.equal(2);
 // 　　　　　　console.log('test 2');

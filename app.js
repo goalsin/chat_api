@@ -10,8 +10,10 @@ var routes = require('./routes');
 var users = require('./routes/user');
 
 var app = express();
-// var redis = require('redis');
-// var db = redis.createClient();
+app.redis = require('redis');
+var db = app.redis.createClient();
+
+app.set('db', db);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,6 +44,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+		app.get('db').end();
         res.render('error', {
             message: err.message,
             error: err
@@ -52,6 +55,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+	app.get('db').end();
     res.render('error', {
         message: err.message,
         error: {}
