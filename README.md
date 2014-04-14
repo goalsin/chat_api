@@ -19,6 +19,8 @@ use [superagent](https://github.com/visionmedia/superagent) to mock http request
 
 - [mocha](http://visionmedia.github.io/mocha/)
 
+- [chai assert](http://chaijs.com/)
+
 ## 
 
-/*    "start": "node ./bin/www &"*/
+
