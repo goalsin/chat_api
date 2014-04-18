@@ -11,6 +11,9 @@ var users = require('./routes/user');
 
 var app = express();
 app.redis = require('redis');
+
+//app.redis.debug_mode = true;
+
 var db = app.redis.createClient();
 
 app.set('db', db);

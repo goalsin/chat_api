@@ -9,7 +9,7 @@ var client  = app.get('db');
 
 var user_model = require('../models/user_model');
 
-describe('my first suite', function() {
+describe('user model suite', function() {
 
 	beforeEach(function() {
 		console.log('setup');
@@ -22,6 +22,10 @@ describe('my first suite', function() {
 	before(function() {
 		console.log('before');
 		console.log('host='+client.host + ' & port='+client.port);
+		
+	    client.hset("user_sang", "name", "alfred sang", app.redis.print);
+	    client.hset(["user_sang", "birthday", "1986-03-17"], app.redis.print);
+		client.hset("user_sang", "universty", "ccut", app.redis.print);
 	});
 
 	after(function() {
@@ -33,23 +37,25 @@ describe('my first suite', function() {
 		expect('127.0.0.1').to.equal(client.host);
 	});
 
-	it('should be my user model test', function(done) {
-		expect(1).to.equal(1);
-		console.log('test');
-
-		// var b = user_model.add('alfred sang',28);
-	     client.hgetall("hash key", function(err, replies){	
+	it('should be user model test', function(done) {
+		
+	     client.hgetall("user_sang", function(err, replies){	
 	          // console.log(replies.length + " replies:");
 		   	  //alternative shortcut
 		   	  console.log(util.inspect(replies, false, null));
 			  
 	  		  if (err) return done(err);
 			  
-		   	  for (var property in replies) {
-		   		  var i = property + ': ' + replies[property]+'; ';
-		   		  console.log(i);
-		   	  }
-	  		  
+			  var myname = replies['name'].toString();
+			  var birthday = replies['birthday'].toString();
+			  var universty = replies['universty'].toString();
+			  
+			  expect(replies).to.have.property('name').with.length(11);
+			  
+			  expect(birthday).to.equal("1986-03-17");
+			  expect(myname).to.equal("alfred sang");
+			  expect(universty).to.equal("ccut");
+			  
 			  done();
 	     });
 	});
