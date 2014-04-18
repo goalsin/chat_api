@@ -57,23 +57,67 @@ describe('redis hash suite', function() {
 		
 	});
 	
-	it('should be hmset usage', function(done) {
+	function print_list_all(){
+		// var b = user_model.add('alfred sang',28);
+	     client.hgetall("test_hash_multi_key", function(err, replies){	
+	          // console.log(replies.length + " replies:");
+		   	  //alternative shortcut
+		   	  //console.log(util.inspect(replies, false, null));
+			  
+		   	  for (var property in replies) {
+		   		  var i = property + ': ' + replies[property]+'; ';
+		   		  console.log(i);
+		   	  }
+	     });
+	}
 		
+	/**
+	 * get current key length: result = 2
+	 */
+	it('should be HLEN usage before HDEL:  result = 2', function(done) {
+		// hash remove key 
+		client.HLEN("test_hash_multi_key",function(err,result){
+			console.log('HLEN before HDEL = '+util.inspect(result, false, null));
+			 
+			if (err) return done(err);
+		  
+			expect(result).to.equal(2);
+		  
+			done();
+		});
+	});
+	
+	it('should be HDEL usage', function(done) {
+		print_list_all();
 		// hash remove key 
 		client.HDEL("test_hash_multi_key", "key_1",function(err,result){
 			console.log('hmkey = '+util.inspect(result, false, null));
-		  
+			 
 			if (err) return done(err);
 		  
 			expect(result).to.be.ok;
 		  
 			done();
 		});
-	
 	});
 	
-	it('should be hmset usage', function(done) {
-		
+	/**
+	 * get current key length alfter HDEL: result = 1
+	 */
+	it('should be HLEN usage alfter HDEL  result = 1', function(done) {
+		// hash remove key 
+		client.HLEN("test_hash_multi_key",function(err,result){
+			console.log('HLEN alfter HDEL  = '+util.inspect(result, false, null));
+			 
+			if (err) return done(err);
+	  
+			expect(result).to.equal(1);
+		  
+			done();
+		});
+	});
+	
+	it('should be HEXISTS usage', function(done) {
 		// hash exists key
 		client.HEXISTS("test_hash_multi_key", "key_no_key",function(err,result){
 			console.log('hmkey = '+util.inspect(result, false, null));
@@ -84,7 +128,6 @@ describe('redis hash suite', function() {
 		  
 		  	done();
 		});
-	
 	});
 
 });

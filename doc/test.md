@@ -258,4 +258,16 @@ describe('user model suite', function() {
 
 - toString用法，redis返回的是buffer，需要转成字符串
 
+### 现在我要实现删除key
+
+- 先打印出key的长度
+- 执行删除key
+- 打印出删除后的长度
+
+那么我能在一个it测试里做么？
+
+答：不能。
+
+每一个it里只能调用一次done，而同时操作3此，是不合理的，只能分成带有顺序的3个it来完成。
+
 
