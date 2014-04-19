@@ -1,16 +1,23 @@
-var app = require('../app');
-var client  = app.get('db');
-
-var util = require('util');
-
-// console.log(util.inspect(client, false, null));
-// console.log(util.inspect(util, {showHidden: false, depth: null}));
-
-exports.add = function(name, age){
-  // console.log('-------model.add'+ app.redis);
+/**
+ * INCR global:nextUserId => 1000
+ * SET uid:1000:username antirez
+ * SET uid:1000:password p1pp0
+ *
+ *
+ */ 
+exports.add = function(name, password){
+	var util = require('util');
+	var app = require('../app');
+	var client = app.get('db');
+	
+	// // hash exists key
+	client.INCR("global:nextUserId", function(err,result){
+		console.log('hmkey = '+util.inspect(result, false, null));
   
-  
- 
-  
-  return true;
+		// if (err) return done(err);
+		//   
+		return result;
+	});
+  	 
+	return true;
 };

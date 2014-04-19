@@ -9,6 +9,9 @@ var bodyParser = require('body-parser');
 var routes = require('./routes');
 var users = require('./routes/user');
 
+
+
+
 var app = express();
 app.redis = require('redis');
 
