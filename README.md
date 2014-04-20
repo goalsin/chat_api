@@ -47,3 +47,8 @@ use [superagent](https://github.com/visionmedia/superagent) to mock http request
 
 - [chai assert](http://chaijs.com/)
 
+- [node book](http://book.mixu.net/node/index.html)
+
+- http://www.infoq.com/articles/surviving-asynchronous-programming-in-javascript
+
+- [async](https://github.com/caolan/async) vs [q](https://github.com/kriskowal/q)
