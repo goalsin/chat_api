@@ -5,14 +5,40 @@
  *
  *
  */ 
+
+exports.getUniqueUserId = function(){
+	var util 	= require('util');
+	var app 	= require('../app');
+	var Q 		= require('q');
+	
+	var client 	 	= app.get('db');
+	var deferred 	= Q.defer();
+	
+	client.INCR("global:nextUserId", function(error,result){
+	    if (error) {
+	        deferred.reject(new Error(error));
+	    } else {
+			console.log('hmkey = '+util.inspect(result, false, null));
+			
+	        deferred.resolve(result);
+	    }
+	});
+	
+	return deferred.promise;
+};
+
+
+
 exports.add = function(name, password){
-	var util = require('util');
-	var app = require('../app');
-	var client = app.get('db');
+	var util 	= require('util');
+	var app 	= require('../app');
+	var Q 		= require('q');
+	
+	var client 	= app.get('db');
 	
 	// // hash exists key
 	client.INCR("global:nextUserId", function(err,result){
-		console.log('hmkey = '+util.inspect(result, false, null));
+		
   
 		// if (err) return done(err);
 		//   
@@ -20,4 +46,17 @@ exports.add = function(name, password){
 	});
   	 
 	return true;
+	
+	var deferred = Q.defer();
+	client.INCR("global:nextUserId", function(error,result){
+	    if (error) {
+	        deferred.reject(new Error(error));
+	    } else {
+			console.log('hmkey = '+util.inspect(result, false, null));
+			
+	        deferred.resolve(result);
+	    }
+	});
+	
+	return deferred.promise;
 };

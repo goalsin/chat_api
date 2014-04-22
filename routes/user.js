@@ -14,8 +14,9 @@ exports.register = function(req, res){
   //var app = require('../app');
   // console.log('hmkey = '+util.inspect( app.get('db'), false, null));
   
-  user_model.add('alfred','000000');
+  user_model.getUniqueUserId().then(function(data){
+  	res.send('respond with a resource' + data);
+  }).done();
   
-  res.send('respond with a resource');
-  
+  //user_model.add('alfred','000000');
 };

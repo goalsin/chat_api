@@ -52,3 +52,6 @@ use [superagent](https://github.com/visionmedia/superagent) to mock http request
 - http://www.infoq.com/articles/surviving-asynchronous-programming-in-javascript
 - [control flow](http://book.mixu.net/node/ch7.html)
 - [async](https://github.com/caolan/async) vs [q](https://github.com/kriskowal/q)
+- [node-js-tutorials](http://www.cnblogs.com/lhb25/archive/2013/12/05/node-js-tutorials.html)
+
+- [q](https://gist.github.com/guptag/7205768)
