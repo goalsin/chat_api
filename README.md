@@ -55,3 +55,5 @@ use [superagent](https://github.com/visionmedia/superagent) to mock http request
 - [node-js-tutorials](http://www.cnblogs.com/lhb25/archive/2013/12/05/node-js-tutorials.html)
 
 - [q](https://gist.github.com/guptag/7205768)
+
+- [redis case](http://redis.io/topics/twitter-clone)
