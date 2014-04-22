@@ -49,3 +49,45 @@ client.hmset(["hashmkey", "ttt 1", "some other value", "ttt 2", "some other valu
 
 
 
+## node_redis的封装
+
+### way 1
+
+in route
+
+	exports.register = function(req, res){
+		user_model.get_unique_userid_with_exec(res);
+	});
+
+in model	
+	
+	exports.get_unique_userid_with_exec = function(res,cb_s,cb_e){
+		return this.exec('INCR',"global:nextUserId").then(function(data){
+			 res.send('respond with a resource' + data);
+		}).fail(function (error) {
+			console.log('error = '+util.inspect(result, false, null));
+		}).done();
+	};
+	
+	
+### way 2
+
+
+in route
+
+	exports.register = function(req, res){
+	    //way 2		  
+	    user_model.get_unique_userid_with_exec_once(function(data){
+	    	  res.send('respond with a resource: ' + data);
+	    },function(error){
+	    	  res.send('respond with a error: ' + error);
+	    });
+	});
+
+in model
+
+	exports.get_unique_userid_with_exec_once = function(cb_s,cb_e){
+		return this.exec_once('INCR',"global:nextUserId",cb_s,cb_e);
+	};
+
+
