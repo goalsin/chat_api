@@ -21,7 +21,8 @@ exports._get_uid = function(){
 
 
 exports._is_exist = function(email){
-	return dbm.exec('hexists',["user:email_to_uid",email]);
+	console.log('email=' +email);
+	return dbm.exec('HEXISTS',["user:email_to_uid",email.toString() ]);
 };
 
 
@@ -50,12 +51,30 @@ exports._create_user_with_uid = function(uid ,username ,password){
 exports.register = function(user ,cb_s ,cb_e){
 	var util = require('util');
 
-	return this._is_exist().then(function(re){
-		return dbm.exec('INCR',"global:nextUserId");
-	}).then(function(uid){
-		console.log('## uid='+uid);
-		this.uid = uid
+	return this._is_exist(user.email).then(function(re){
+		
+		if(re !== 1){
+			console.log('## 此email已经存在:'+user.email);
+			
+			return dbm.exec('INCR',"global:nextUserId");
+		}else{
+			return cb_s({
+				status:{
+					'code':'10001',
+					'msg':'此email已经存在'
+				},
+				data:{}
+			});
+		}
+		
+	}).then(function(re){
+
+		this.uid = uid;
+		this.email = user.email;
 		return dbm.exec('hmset',['uid:' + uid , 'email',user.email,'username',user.username,'password',user.passwd]);
+	
+	}).then(function(user){
+		return dbm.exec('hmset',['user:email_to_uid' , this.email,this.uid]);
 	}).then(function(user){
 		console.log('## save uid='+user);
 		return dbm.exec('hmget',['uid:' + this.uid + ':username','uid:' + this.uid + ':password']);
@@ -82,9 +101,6 @@ exports.register = function(user ,cb_s ,cb_e){
 	}).fail(function(error){
 		cb_e(error);
 	}).done();
-	
-	
-	return dbm.exec_once('MSET','uid',uid,'name',user_obj.name,'passwd',user_obj.passwd,cb_s,cb_e);
 };
 
 exports.get_user_with_uid = function(uid ,cb_s ,cb_e){
