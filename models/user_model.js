@@ -39,11 +39,17 @@ exports.verify = function(hashedPassword){
     // console.log(passwordHash.verify('Password0', hashedPassword)); // false
 }
 
+
 /**
- * @param = email
- * @param = username
- * @param = password
- */ 
+ * 用户注册.
+ *
+ * @param {String} email
+ * @param {String} username
+ * @param {String} password
+ * @return {Object} exports
+ * @api public
+ */
+
 exports.register = function(user ,cb_s ,cb_e){
 	var util 	= require('util');
 	var api_error 	= require('./error');
