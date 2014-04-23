@@ -11,22 +11,30 @@ exports.list = function(req, res){
 /* 用户注册. */
 exports.register = function(req, res){
 	
-  //var app = require('../app');
-  // console.log('hmkey = '+util.inspect( app.get('db'), false, null));
-  
-  // user_model.getUniqueUserId().then(function(data){
-  // 	res.send('respond with a resource' + data);
-  // }).done();
+	//var app = require('../app');
+	console.log('hmkey = '+util.inspect( req.query  , false, null));
 
-  //way 1	
-  //user_model.get_unique_userid_with_exec(res);
-	  
- 
-  //way 2		  
-  user_model.get_unique_userid_with_exec_once(function(data){
-  	  res.send('respond with a resource: ' + data);
-  },function(error){
-  	  res.send('respond with a error: ' + error);
-  });
+	// user_model.getUniqueUserId().then(function(data){
+	// 	res.send('respond with a resource' + data);
+	// }).done();
+
+	//way 1	
+	//user_model.get_unique_userid_with_exec(res);
+  
+  	var user = {};
+	
+	user.username = req.param('name')
+	user.passwd = req.param('password')
+
+
+	user_model.register(user ,function(data){
+		
+		res.send(data);
+	  	//res.send('respond with a resource: ' + data+' &name='+req.param('name') );
+	},function(error){
+	  res.send('respond with a error: ' + error);
+	});
+	
+	
 
 };

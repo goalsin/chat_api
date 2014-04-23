@@ -270,4 +270,20 @@ describe('user model suite', function() {
 
 每一个it里只能调用一次done，而同时操作3此，是不合理的，只能分成带有顺序的3个it来完成。
 
+### json
+
+	var data = { dir: 'kunhony', param: 'archive' };
+
+	var str = JSON.stringify(data);
+	console.log(str);
+
+	var aaa = JSON.parse(str);
+	console.log(aaa.param);
+
+
+
+
+
+
+
 

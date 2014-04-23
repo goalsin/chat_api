@@ -14,6 +14,8 @@ exports.exec = function(command,args){
 	var client 	 	= app.get('db');
 	var deferred 	= Q.defer();
 	
+	Q.longStackSupport = true;
+	
 	client.send_command(command, args, function(error,result){
 	    if (error) {
 	        deferred.reject(new Error(error));
