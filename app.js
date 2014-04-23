@@ -36,6 +36,7 @@ app.use(app.router);
 app.get('/', routes.index);
 app.get('/users', users.list);
 app.get('/user/register', users.register);
+app.post('/user/register.do', users.register);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

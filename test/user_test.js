@@ -9,7 +9,7 @@ var client  = app.get('db');
 
 var user_model = require('../models/user_model');
 
-var superagent = require('superagent');
+var request = require('superagent');
 
 describe('user model suite', function() {
 
@@ -63,11 +63,30 @@ describe('user model suite', function() {
 	});
 
     it('should respond to GET',function(done){
-      superagent
-        .get('http://127.0.0.1:3000/user/register?name=sang&password=ssl0417&email=shiren1117@126.com')
-        .end(function(res){
-          expect(res.text).to.equal('{\n  "status": {\n    "code": "10001",\n    "msg": "此email已经存在"\n  },\n  "data": {}\n}');
-          done()
-      })
+		request
+        	.get('http://127.0.0.1:3000/user/register?name=sang&password=ssl0417&email=shiren1117@126.com')
+			.end(function(res)
+			{
+				expect(res.text).to.equal('{\n  "status": {\n    "code": "10001",\n    "msg": "此email已经存在"\n  },\n  "data": {}\n}');
+          	  done()
+      		}
+		);
+    })
+	
+    it('should respond to POST',function(done){
+		request
+			.post('http://127.0.0.1:3000/user/register.do')
+			.send({
+				name:'sang',
+				password:'ssl0417',
+				email:'shiren1117@126.com'
+			})
+			.set('Accept', 'application/json')
+	        .end(function(res)
+			{
+				expect(res.text).to.equal('{\n  "status": {\n    "code": "10001",\n    "msg": "此email已经存在"\n  },\n  "data": {}\n}');
+          	  done()
+      		}
+		)
     })
 });
