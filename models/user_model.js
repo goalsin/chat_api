@@ -25,6 +25,19 @@ exports._is_exist = function(email){
 	return dbm.exec('HEXISTS',["user:email_to_uid",email.toString() ]);
 };
 
+exports.get_hashed_password = function(pwd){
+	var bcrypt = require('bcrypt');
+	var salt = bcrypt.genSaltSync(10);
+	var hash = bcrypt.hashSync("B4c0/\/", salt);
+	console.log(hashedPassword); 
+}
+
+exports.verify = function(hashedPassword){
+	var passwordHash = require('./lib/password-hash');
+
+    console.log(passwordHash.verify('password123', hashedPassword)); // true
+    // console.log(passwordHash.verify('Password0', hashedPassword)); // false
+}
 
 /**
  * @param = email
