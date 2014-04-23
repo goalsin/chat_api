@@ -45,7 +45,9 @@ exports.verify = function(hashedPassword){
  * @param = password
  */ 
 exports.register = function(user ,cb_s ,cb_e){
-	var util = require('util');
+	var util 	= require('util');
+	var api_error 	= require('./error');
+	var api 	= require('./utils/api');
 
 	return this._is_exist(user.email).then(function(re){
 		// 第一步：判断email是否存在
@@ -56,15 +58,8 @@ exports.register = function(user ,cb_s ,cb_e){
 			return dbm.exec('INCR',"global:nextUserId");
 		}else{
 			// 如果用户存在，返回错误提示
-			return cb_s({
-				status:{
-					'code':'10001',
-					'msg':'此email已经存在'
-				},
-				data:{}
-			});
+			return cb_s( api_error.EMAIL_EXISTED );
 		}
-		
 	}).then(function(uid){
 		// 获得自增id，暂存数据
 		this.uid = uid;
@@ -76,19 +71,12 @@ exports.register = function(user ,cb_s ,cb_e){
 		// 保存user:email_to_uid
 		return dbm.exec('hmset',['user:email_to_uid' , this.email,this.uid]);
 	}).then(function(re){
-		
 		// 如果保存成功，返回用户信息
 		if(re === 'OK'){
 			return dbm.exec('HVALS',['uid:' + this.uid]);
 		}else{
 			// 返回错误提示
-			return cb_s({
-				status:{
-					'code':'10002',
-					'msg':'无法获取用户信息'
-				},
-				data:{}
-			});
+			return cb_s(api_error.CAN_NOT_GET_USER_DETAIL);
 		}
 	}).then(function(result){
 		// 
@@ -105,16 +93,10 @@ exports.register = function(user ,cb_s ,cb_e){
 			};
 				
 			// 返回用户信息
-			cb_s(user);
+			cb_s(api.api_json(user));
 		}else{
 			// 返回错误提示
-			return cb_s({
-				status:{
-					'code':'10002',
-					'msg':'无法获取用户信息'
-				},
-				data:{}
-			});
+			return cb_s(api_error.CAN_NOT_GET_USER_DETAIL);
 		}
 	}).fail(function(error){
 		cb_e(error);
