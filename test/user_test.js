@@ -9,6 +9,8 @@ var client  = app.get('db');
 
 var user_model = require('../models/user_model');
 
+var superagent = require('superagent');
+
 describe('user model suite', function() {
 
 	beforeEach(function() {
@@ -60,4 +62,12 @@ describe('user model suite', function() {
 	     });
 	});
 
+    it('should respond to GET',function(done){
+      superagent
+        .get('http://127.0.0.1:3000/user/register?name=sang&password=ssl0417&email=shiren1117@126.com')
+        .end(function(res){
+          expect(res.text).to.equal('{\n  "status": {\n    "code": "10001",\n    "msg": "此email已经存在"\n  },\n  "data": {}\n}');
+          done()
+      })
+    })
 });
