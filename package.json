@@ -12,6 +12,7 @@
     "chai": "*",
     "sinon": "*",
     "supervisor": "*",
+	"superagent": "~0.15.7",
     "express": "~3.4.8",
     "static-favicon": "~1.0.0",
     "morgan": "~1.0.0",
