@@ -25,7 +25,7 @@ exports.register = function(req, res){
 	
 	user.username = req.param('name')
 	user.passwd = req.param('password')
-
+	user.email = req.param('email')
 
 	user_model.register(user ,function(data){
 		

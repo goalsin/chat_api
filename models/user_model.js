@@ -19,6 +19,12 @@ exports._get_uid = function(){
 	return dbm.exec('INCR',"global:nextUserId");
 };
 
+
+exports._is_exist = function(email){
+	return dbm.exec('hexists',["user:email_to_uid",email]);
+};
+
+
 // SET uid:1000:username antirez
 // SET uid:1000:password p1pp0
 exports._create_user_with_uid = function(uid ,username ,password){
@@ -35,41 +41,40 @@ exports._create_user_with_uid = function(uid ,username ,password){
 // 	return dbm.exec('INCR',"global:nextUserId");
 // };
 
+
+/**
+ * @param = email
+ * @param = username
+ * @param = password
+ */ 
 exports.register = function(user ,cb_s ,cb_e){
 	var util = require('util');
-	
-   // return dbm.exec('mget',['uid:' + 103 + ':username','uid:' + 103 + ':password'])
- //   .then(function(uid){
- // 	   
- // 	   console.log('user_mode.register = '+util.inspect(uid, false, null));
- //   	console.log('## uid='+uid[0].toString());
- // 	cb_s(uid.toString() );
- //   }).done();
 
-	return this._get_uid().then(function(uid){
+	return this._is_exist().then(function(re){
+		return dbm.exec('INCR',"global:nextUserId");
+	}).then(function(uid){
 		console.log('## uid='+uid);
 		this.uid = uid
-		return dbm.exec('mset',
-					['uid:' + uid + ':username',user.username
-					,'uid:' + uid + ':password',user.passwd
-					]
-	)
+		return dbm.exec('hmset',['uid:' + uid , 'email',user.email,'username',user.username,'password',user.passwd]);
 	}).then(function(user){
 		console.log('## save uid='+user);
-		return dbm.exec('mget',['uid:' + this.uid + ':username','uid:' + this.uid + ':password']);
+		return dbm.exec('hmget',['uid:' + this.uid + ':username','uid:' + this.uid + ':password']);
 	}).then(function(user){
 		console.log('## save111 uid='+this.uid);
 		// console.log('redis return result = '+util.inspect(this, false, null));
-		return dbm.exec('mget',['uid:' + this.uid + ':username','uid:' + this.uid + ':password']);
+		return dbm.exec('HVALS',['uid:' + this.uid]);
 		
 	}).then(function(result){
+		
+		console.log('## result='+result);
 		if(result){
 			result.uid = this.uid;
 			
 			var user = {
 				uid:this.uid,
-				username:result[0].toString(),
-				password:result[1].toString()
+				email:result[0].toString(),
+				username:result[1].toString(),
+				password:result[2].toString()
 			};
 			
 			cb_s(user );
