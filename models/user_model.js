@@ -26,23 +26,6 @@ exports._is_exist = function(email){
 };
 
 
-// SET uid:1000:username antirez
-// SET uid:1000:password p1pp0
-exports._create_user_with_uid = function(uid ,username ,password){
-	console.log('username' +username);
-	return dbm.exec('mset',
-					['uid:' + uid + ':username',username
-					,'uid:' + uid + ':password',password
-					]
-	).then(function(result){
-		return dbm.exec('mget',['uid:' + uid + ':username','uid:' + uid + ':password']);
-	});
-}
-// exports.is_user_exist = function(){
-// 	return dbm.exec('INCR',"global:nextUserId");
-// };
-
-
 /**
  * @param = email
  * @param = username
@@ -52,12 +35,14 @@ exports.register = function(user ,cb_s ,cb_e){
 	var util = require('util');
 
 	return this._is_exist(user.email).then(function(re){
-		
+		// 第一步：判断email是否存在
 		if(re !== 1){
-			console.log('## 此email已经存在:'+user.email);
+			console.log('## 此email没有存在:'+user.email);
 			
+			// 第二步：当email不存在的时候，获得自增uid
 			return dbm.exec('INCR',"global:nextUserId");
 		}else{
+			// 如果用户存在，返回错误提示
 			return cb_s({
 				status:{
 					'code':'10001',
@@ -67,25 +52,35 @@ exports.register = function(user ,cb_s ,cb_e){
 			});
 		}
 		
-	}).then(function(re){
-
+	}).then(function(uid){
+		// 获得自增id，暂存数据
 		this.uid = uid;
 		this.email = user.email;
+		
+		// 保存用户信息详情
 		return dbm.exec('hmset',['uid:' + uid , 'email',user.email,'username',user.username,'password',user.passwd]);
-	
 	}).then(function(user){
+		// 保存user:email_to_uid
 		return dbm.exec('hmset',['user:email_to_uid' , this.email,this.uid]);
-	}).then(function(user){
-		console.log('## save uid='+user);
-		return dbm.exec('hmget',['uid:' + this.uid + ':username','uid:' + this.uid + ':password']);
-	}).then(function(user){
-		console.log('## save111 uid='+this.uid);
-		// console.log('redis return result = '+util.inspect(this, false, null));
-		return dbm.exec('HVALS',['uid:' + this.uid]);
+	}).then(function(re){
 		
+		// 如果保存成功，返回用户信息
+		if(re === 'OK'){
+			return dbm.exec('HVALS',['uid:' + this.uid]);
+		}else{
+			// 返回错误提示
+			return cb_s({
+				status:{
+					'code':'10002',
+					'msg':'无法获取用户信息'
+				},
+				data:{}
+			});
+		}
 	}).then(function(result){
-		
+		// 
 		console.log('## result='+result);
+		
 		if(result){
 			result.uid = this.uid;
 			
@@ -95,17 +90,20 @@ exports.register = function(user ,cb_s ,cb_e){
 				username:result[1].toString(),
 				password:result[2].toString()
 			};
-			
-			cb_s(user );
+				
+			// 返回用户信息
+			cb_s(user);
+		}else{
+			// 返回错误提示
+			return cb_s({
+				status:{
+					'code':'10002',
+					'msg':'无法获取用户信息'
+				},
+				data:{}
+			});
 		}
 	}).fail(function(error){
 		cb_e(error);
 	}).done();
 };
-
-exports.get_user_with_uid = function(uid ,cb_s ,cb_e){
-	console.log('get_user_with_uid');
-	dbm.exec_once('mget',['uid:' + uid + ':username','uid:' + uid + ':password'],cb_s,cb_e);
-};
-
-
