@@ -56,6 +56,8 @@ use [superagent](https://github.com/visionmedia/superagent) to mock http request
 
 - [q](https://gist.github.com/guptag/7205768)
 
+- [angularjs-authentication-with-cookies-vs-token/](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
+
 - [redis case](http://redis.io/topics/twitter-clone)
 
 twitter-clone会有问题，比如用户，纯string实现，很明显不是好方法，比如校验email或者name唯一就做不到

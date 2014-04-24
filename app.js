@@ -5,11 +5,11 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
 
 var routes = require('./routes');
 var users = require('./routes/user');
-
-
 
 
 var app = express();
@@ -32,6 +32,12 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
+
+// We are going to protect /api routes with JWT
+app.use('/api', expressJwt({secret: secret}));
+
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get('/', routes.index);
 app.get('/users', users.list);

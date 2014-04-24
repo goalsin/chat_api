@@ -1,5 +1,5 @@
 /**
- * 用户model 
+ * 课程model 
  * author by alfred.sang
  *
  */ 
