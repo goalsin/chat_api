@@ -68,7 +68,7 @@ describe('user model suite', function() {
 			.end(function(res)
 			{
 				expect(res.text).to.equal('{\n  "status": {\n    "code": "10001",\n    "msg": "此email已经存在"\n  },\n  "data": {}\n}');
-          	  done()
+				done()
       		}
 		);
     })
@@ -85,8 +85,19 @@ describe('user model suite', function() {
 	        .end(function(res)
 			{
 				expect(res.text).to.equal('{\n  "status": {\n    "code": "10001",\n    "msg": "此email已经存在"\n  },\n  "data": {}\n}');
-          	  done()
+          	  	done()
       		}
 		)
     })
+	
+	it('should be drop user', function(done) {
+		var u = user_model.drop_user_with_uid_and_email(175,'shiren1112@126.com',function(data){
+			expect(data.statue.code).to.equal(0);
+			
+			console.log('drop user result = '+util.inspect(data, false, null));
+			done();
+		},function(e){
+			done();
+		}); 
+	});
 });

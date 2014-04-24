@@ -3,6 +3,15 @@
  * author by alfred.sang
  */ 
 
+exports.db = function(command,args){
+	var util 	= require('util');
+	var app 	= require('../app');
+	var Q 		= require('q');
+	
+	var client 	 	= app.get('db');
+	
+	return client;
+}
 /**
  * 通用的exec执行redisclient的命令
  */ 

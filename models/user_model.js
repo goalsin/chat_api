@@ -23,6 +23,11 @@ exports._is_exist = function(email){
 	return dbm.exec('HEXISTS',["user:email_to_uid",email.toString() ]);
 };
 
+exports._drop_user_with_uid = function(uid){
+	console.log('_drop_user_with_uid uid =' +uid);
+	return dbm.exec('HDEL',['uid:' + uid,'username','password','email']);
+};
+
 exports.get_hashed_password = function(pwd){
 	var bcrypt = require('bcrypt');
 	var salt = bcrypt.genSaltSync(10);
@@ -106,3 +111,26 @@ exports.register = function(user ,cb_s ,cb_e){
 		cb_e(error);
 	}).done();
 };
+
+
+exports.drop_user_with_uid_and_email = function(uid ,email ,cb_s ,cb_e){
+	var util 		= require('util');
+	var api_error 	= require('./error');
+	var api 		= require('./utils/api');
+
+	return this._drop_user_with_uid(uid).then(function(re){
+		this.email = email;
+		console.log('##email result='+email);
+		
+		return dbm.exec('HDEL',["user:email_to_uid",this]);
+	}).then(function(re){
+		if(re === 1){
+			cb_s( api.api_json() );
+		}else{
+			cb_s( api_error.CAN_NOT_DELETE_USER_DETAIL);
+		}
+		
+	}).fail(function(error){
+		cb_e(error);
+	}).done();
+}
