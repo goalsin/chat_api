@@ -14,11 +14,9 @@ exports.get_unique_userid_with_exec = function(res,cb_s,cb_e){
 	}).done();
 };
 
-
 exports._get_uid = function(){
 	return dbm.exec('INCR',"global:nextUserId");
 };
-
 
 exports._is_exist = function(email){
 	console.log('email=' +email);
