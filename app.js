@@ -34,15 +34,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 // We are going to protect /api routes with JWT
-app.use('/api', expressJwt({secret: secret}));
+app.use('/api', expressJwt({secret: 'secret'}));
 
 app.use(express.json());
 app.use(express.urlencoded());
 
 app.get('/', routes.index);
 app.get('/users', users.list);
+
+app.post('/api/user/register.do', users.register);
+app.post('/api/user/login', users.login);
+
+
+//  for test
 app.get('/user/register', users.register);
-app.post('/user/register.do', users.register);
+app.get('/user/login', users.login);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

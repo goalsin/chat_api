@@ -140,3 +140,64 @@ exports.drop_user_with_uid_and_email = function(uid ,email ,cb_s ,cb_e){
 		cb_e(error);
 	}).done();
 }
+
+
+/**
+ * 用户登陆.说明此方法还可以用redis的multi重构
+ *
+ * @param {String} email
+ * @param {String} username
+ * @param {String} password
+ * @return {Object} exports
+ * @api public
+ */
+exports.login = function(user ,cb_s ,cb_e){
+	var util 	= require('util');
+	var api_error 	= require('./error');
+	var api 	= require('./utils/api');
+
+	return this._is_exist(user.email).then(function(re){
+		// 第一步：判断email是否存在
+		if(re !== 1){
+			console.log('## 此email没有存在:'+user.email);
+			
+			// 第二步：当email不存在的时候，返回错误
+			return cb_s( api_error.EMAIL_EXISTED );
+		}else{
+			// 如果用户存在，获得uid
+			this.email = user.email;
+			this.password = user.passwd;
+			return dbm.exec('hmget',['user:email_to_uid' , this.email]);
+		}
+	}).then(function(uid){
+		// 获取用户信息
+		return dbm.exec('hmget',['uid:' + uid , 'email','username','password'] );
+	}).then(function(result){
+		// 验证邮箱和密码
+		console.log('## result='+result);
+		
+		if(result){
+			result.uid = this.uid;
+			
+			if(result[0].toString() === this.email && result[2].toString() === this.password){
+				var user = {
+					uid:this.uid,
+					email:result[0].toString(),
+					username:result[1].toString(),
+					password:result[2].toString()
+				};
+			
+				// 返回用户信息
+				cb_s(api.api_json(user));
+			}else{
+				// 返回错误提示
+				return cb_s(api_error.CAN_NOT_GET_USER_DETAIL);
+			}
+		}else{
+			// 返回错误提示
+			return cb_s(api_error.CAN_NOT_GET_USER_DETAIL);
+		}
+	}).fail(function(error){
+		cb_e(error);
+	}).done();
+};

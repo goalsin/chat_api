@@ -75,7 +75,7 @@ describe('user model suite', function() {
 	
     it('should respond to POST',function(done){
 		request
-			.post('http://127.0.0.1:3000/user/register.do')
+			.post('http://127.0.0.1:3000/api/user/register.do')
 			.send({
 				name:'sang',
 				password:'ssl0417',
@@ -90,6 +90,22 @@ describe('user model suite', function() {
 		)
     })
 	
+    it('should respond to POST login',function(done){
+		request
+			.post('http://127.0.0.1:3000/api/user/login.do')
+			.send({
+				password:'ssl0417',
+				email:'shiren1117@126.com'
+			})
+			.set('Accept', 'application/json')
+	        .end(function(res)
+			{
+				expect(res.text).to.equal('{\n  "status": {\n    "code": "10001",\n    "msg": "此email已经存在"\n  },\n  "data": {}\n}');
+          	  	done()
+      		}
+		)
+    })
+		
 	it('should be drop user', function(done) {
 		var u = user_model.drop_user_with_uid_and_email(175,'shiren1112@126.com',function(data){
 			expect(data.statue.code).to.equal(0);

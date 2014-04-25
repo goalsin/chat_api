@@ -1,5 +1,6 @@
 var util = require('util');
-
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
 
 var user_model = require('../models/user_model');
 
@@ -18,7 +19,47 @@ exports.register = function(req, res){
 	user.email = req.param('email')
 
 	user_model.register(user ,function(data){
-		res.send(data);
+		//res.send(profile);
+		// We are sending the profile inside the token
+		if(data.status.code == 0){
+			// var profile = data.data;
+	// 		var token = jwt.sign(profile, 'secret', { expiresInMinutes: 0*1 });
+	// 		data.data = { token: token };
+			res.json(data);
+		}else{
+			res.send(data);
+		}
+		
+		
+	},function(error){
+	  res.send('respond with a error: ' + error);
+	});
+};
+
+
+/* 
+ * 用户登陆.
+ *
+ * 使用邮箱和密码登陆
+ */
+exports.login = function(req, res){
+	console.log('hmkey = '+util.inspect( req.query  , false, null));
+	
+  	var user = {};
+	user.passwd = req.param('password')
+	user.email = req.param('email')
+
+	user_model.login(user ,function(data){
+		//res.send(profile);
+		// We are sending the profile inside the token
+		if(data.status.code == 0){
+			var profile = data.data;
+			var token = jwt.sign(profile, 'secret', { expiresInMinutes: 0*1 });
+			data.data = { token: token };
+			res.json(data);
+		}else{
+			res.send(data);
+		}
 	},function(error){
 	  res.send('respond with a error: ' + error);
 	});
