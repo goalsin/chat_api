@@ -118,7 +118,6 @@ exports.register = function(user ,cb_s ,cb_e){
 	}).done();
 };
 
-
 exports.drop_user_with_uid_and_email = function(uid ,email ,cb_s ,cb_e){
 	var util 		= require('util');
 	var api_error 	= require('./error');
@@ -130,23 +129,21 @@ exports.drop_user_with_uid_and_email = function(uid ,email ,cb_s ,cb_e){
 		
 		return dbm.exec('HDEL',["user:email_to_uid",this]);
 	}).then(function(re){
+		
 		if(re === 1){
 			cb_s( api.api_json() );
 		}else{
 			cb_s( api_error.CAN_NOT_DELETE_USER_DETAIL);
 		}
-		
 	}).fail(function(error){
 		cb_e(error);
 	}).done();
 }
 
-
 /**
  * 用户登陆.说明此方法还可以用redis的multi重构
  *
  * @param {String} email
- * @param {String} username
  * @param {String} password
  * @return {Object} exports
  * @api public

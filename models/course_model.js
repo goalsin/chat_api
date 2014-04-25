@@ -118,7 +118,6 @@ exports.register = function(user ,cb_s ,cb_e){
 	}).done();
 };
 
-
 exports.drop_user_with_uid_and_email = function(uid ,email ,cb_s ,cb_e){
 	var util 		= require('util');
 	var api_error 	= require('./error');
@@ -130,12 +129,12 @@ exports.drop_user_with_uid_and_email = function(uid ,email ,cb_s ,cb_e){
 		
 		return dbm.exec('HDEL',["user:email_to_uid",this]);
 	}).then(function(re){
+		
 		if(re === 1){
 			cb_s( api.api_json() );
 		}else{
 			cb_s( api_error.CAN_NOT_DELETE_USER_DETAIL);
 		}
-		
 	}).fail(function(error){
 		cb_e(error);
 	}).done();
