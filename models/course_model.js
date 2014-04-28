@@ -2,6 +2,11 @@
  * 课程model 
  * author by alfred.sang
  *
+ * - 课程名称
+ * - 创建时间
+ * - 详情
+ * - 作者
+ * - 教案
  */ 
 
 var dbm = require('./datamodel');
