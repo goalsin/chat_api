@@ -54,7 +54,7 @@ exports.login = function(req, res){
 		// We are sending the profile inside the token
 		if(data.status.code == 0){
 			var profile = data.data;
-			var token = jwt.sign(profile, 'secret', { expiresInMinutes: 0*1 });
+			var token = jwt.sign(profile, 'secret', { expiresInMinutes: 60*5 });
 			data.data = { token: token };
 			res.json(data);
 		}else{

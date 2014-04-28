@@ -53,6 +53,9 @@ app.get('/course/create', courses.create);
 app.get('/course/get', courses.get);
 
 
+var unix_timestamp = Math.round(+new Date()/1000)|0;
+console.log('TEST timestamp = '+ unix_timestamp);
+
 //  for test
 app.get('/user/register', users.register);
 app.get('/user/login', users.login);
