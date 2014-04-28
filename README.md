@@ -60,6 +60,10 @@ use [superagent](https://github.com/visionmedia/superagent) to mock http request
 
 - [redis case](http://redis.io/topics/twitter-clone)
 
-twitter-clone会有问题，比如用户，纯string实现，很明显不是好方法，比如校验email或者name唯一就做不到
 
-最好的办法当然是把它们当做一个key了，这样就可以用redis自己的exist方法了。
+- [re-using-backbonejs-models-on-the-server-with-node](https://blog.andyet.com/2011/feb/15/re-using-backbonejs-models-on-the-server-with-node/）非常好，带v2重构
+
+
+## v2计划
+
+- 使用backbone的model重构现在的model

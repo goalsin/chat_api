@@ -12,6 +12,14 @@
 var dbm = require('./datamodel');
 var util = require('util');
 
+//-------------------------   attr  -------------------------
+exports.name = '';
+exports.created_time = '';
+exports.desc = '';
+exports.author = '';
+exports.document = '';
+
+
 //------------------------- 私有方法 -------------------------
 exports.get_unique_userid_with_exec_once = function(cb_s,cb_e){
 	dbm.exec_once('INCR',"global:nextUserId",cb_s,cb_e);
@@ -123,7 +131,16 @@ exports.register = function(user ,cb_s ,cb_e){
 	}).done();
 };
 
-exports.drop_user_with_uid_and_email = function(uid ,email ,cb_s ,cb_e){
+/**
+ * 创建教程.
+ *
+ * @param {String} course
+ * @param {String} username
+ * @param {String} password
+ * @return {Object} exports
+ * @api public
+ */
+exports.create = function(course ,cb_s ,cb_e){
 	var util 		= require('util');
 	var api_error 	= require('./error');
 	var api 		= require('./utils/api');
