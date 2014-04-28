@@ -10,6 +10,7 @@ var jwt = require('jsonwebtoken');
 
 var routes = require('./routes');
 var users = require('./routes/user');
+var courses = require('./routes/course');
 
 
 var app = express();
@@ -42,8 +43,14 @@ app.use(express.urlencoded());
 app.get('/', routes.index);
 app.get('/users', users.list);
 
-app.post('/api/user/register.do', users.register);
-app.post('/api/user/login', users.login);
+app.post('/api/user/register.do'	, users.register);
+app.post('/api/user/login'			, users.login);
+app.post('/api/course/create.do'	, courses.create);
+
+
+app.get('/course/create', courses.create);
+
+app.get('/course/get', courses.get);
 
 
 //  for test
@@ -63,7 +70,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
-		app.get('db').end();
+		// TODO: app.get('db').end();
         res.render('error', {
             message: err.message,
             error: err
@@ -74,7 +81,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-	app.get('db').end();
+	// TODO: app.get('db').end();
     res.render('error', {
         message: err.message,
         error: {}
