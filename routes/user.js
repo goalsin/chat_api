@@ -54,8 +54,14 @@ exports.login = function(req, res){
 		// We are sending the profile inside the token
 		if(data.status.code == 0){
 			var profile = data.data;
+			
+			console.log('ddd = '+util.inspect( data  , false, null));
+			
 			var token = jwt.sign(profile, 'secret', { expiresInMinutes: 60*5 });
 			data.data = { token: token };
+			
+
+			user_model.save_uid_and_token(profile['uid'] ,token);
 			res.json(data);
 		}else{
 			res.send(data);

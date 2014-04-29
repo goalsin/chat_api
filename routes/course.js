@@ -10,7 +10,6 @@ var course_model = require('../models/course_model');
  *
  */
 exports.create = function(req, res){
-	console.log('hmkey = '+util.inspect( req.param('name') , false, null));
 	
   	var course = {};
 	
@@ -21,7 +20,8 @@ exports.create = function(req, res){
 	// 	this.document 		= course.document | '';
 	
 
-
+	
+	
 	course.cname 		= req.param('name').toString();
 	course.cdesc 		= req.param('desc').toString();
 	course.created_time = req.param('created_time');
@@ -30,16 +30,30 @@ exports.create = function(req, res){
 
     // TODO: verify params
 	
-	//
-	course_model.create(course, function(data){
-		if(data.status.code == 0){
-			res.json(data);
-		}else{
-			res.send(data);
-		}
+	var token = req.param('token').toString();
+	
+	var util = require('util');
+	console.log('data = '+util.inspect( token , false, null));
+	
+	
+	course_model.get_uid_with_token(token, function(data){
+		course.uid = data.toString();
+		
+		console.log('data = '+data);
+		//
+		course_model.create(course, function(data){
+			if(data.status.code == 0){
+				res.json(data);
+			}else{
+				res.send(data);
+			}
+		},function(error){
+		  res.send('respond with a error: ' + error);
+		});
 	},function(error){
 	  res.send('respond with a error: ' + error);
 	});
+	
 };
 
 

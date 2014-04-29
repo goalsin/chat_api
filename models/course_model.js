@@ -9,8 +9,8 @@
  * - 教案
  */ 
 
-var dbm = require('./datamodel');
-var util = require('util');
+var dbm 	= require('./datamodel');
+var util 	= require('util');
 
 //-------------------------   attr  -------------------------
 exports.name = '';
@@ -31,6 +31,16 @@ exports._get_by_id = function(cid){
 };
 
 //------------------------- api方法 -------------------------
+/**
+ * 根据token获得uid
+ *
+ * @param {String} token
+ * @return {Object} exports
+ * @api public
+ */
+exports.get_uid_with_token = function(token ,cb_s ,cb_e){
+	return dbm.exec_once('hmget' ,['user:token_to_uid' , token] ,cb_s ,cb_e);
+};
 
 /**
  * 创建教程.
@@ -45,6 +55,9 @@ exports.create = function(course ,cb_s ,cb_e){
 	var api 		= require('./utils/api');
 
 	this.cid 			= 0;
+	
+	var token			= course.token.toString();
+	
  	var cname 			= course.cname.toString();
 	var cdesc 			= course.cdesc.toString();
 	var created_time 	= course.created_time.toString() | '';
@@ -65,6 +78,7 @@ exports.create = function(course ,cb_s ,cb_e){
 		]);
 	}).then(function(re){
 		console.log('##hset id='+re);
+		// 设置用户课程表
 		
 		return dbm.exec('HGETALL',['course_id:' + this.cid]);
 		

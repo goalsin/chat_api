@@ -167,6 +167,7 @@ exports.login = function(user ,cb_s ,cb_e){
 			return dbm.exec('hmget',['user:email_to_uid' , this.email]);
 		}
 	}).then(function(uid){
+		this.uid = uid;
 		// 获取用户信息
 		return dbm.exec('hmget',['uid:' + uid , 'email','username','password'] );
 	}).then(function(result){
@@ -178,12 +179,12 @@ exports.login = function(user ,cb_s ,cb_e){
 			
 			if(result[0].toString() === this.email && result[2].toString() === this.password){
 				var user = {
-					uid:this.uid,
+					uid:this.uid.toString(),
 					email:result[0].toString(),
 					username:result[1].toString(),
 					password:result[2].toString()
 				};
-			
+				
 				// 返回用户信息
 				cb_s(api.api_json(user));
 			}else{
@@ -198,3 +199,68 @@ exports.login = function(user ,cb_s ,cb_e){
 		cb_e(error);
 	}).done();
 };
+
+
+
+/**
+ * 用户登陆.说明此方法还可以用redis的multi重构
+ *
+ * @param {String} email
+ * @param {String} password
+ * @return {Object} exports
+ * @api public
+ */
+exports.save_uid_and_token = function(uid,token){
+	var util 		= require('util');
+	var api_error 	= require('./error');
+	var api 		= require('./utils/api');
+	console.log('uid = '+uid);
+	return dbm.exec_once('HSET',["user:token_to_uid" ,token ,uid + ''],function(result){
+		
+	},function(error){
+		
+	});
+}
+
+exports._is_exist_token = function(token){
+	console.log('token=' +token);
+	return dbm.exec('HEXISTS',["user:token_to_uid",token.toString() ]);
+}
+
+exports.get_uid_by_token = function(token,cb_s ,cb_e){
+	var util 		= require('util');
+	var api_error 	= require('./error');
+	var api 		= require('./utils/api');
+	
+	return this._is_exist_token(token).then(function(re){
+		// 第一步：判断email是否存在
+		if(re !== 1){
+			console.log('## 此token没有存在:'+ token);
+			
+			// 第二步：当email不存在的时候，返回错误
+			return cb_s( api_error.EMAIL_EXISTED );
+		}else{
+			// 如果用户存在，获得uid
+			this.token = token;
+
+			return dbm.exec('hmget',['user:token_to_uid' , this.token]);
+		}
+	}).then(function(uid){
+		// 取到uid
+		console.log('## result='+uid);
+		
+		if( parseInt( uid ) > 0 ){
+			var user = {
+				uid: uid
+			};
+		
+			// 返回用户信息
+			cb_s(api.api_json(user));
+		}else{
+			// 返回错误提示
+			return cb_s(api_error.CAN_NOT_GET_USER_DETAIL);
+		}
+	}).fail(function(error){
+		cb_e(error);
+	}).done();
+}

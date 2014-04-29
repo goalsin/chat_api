@@ -39,7 +39,8 @@ describe('ZCourse model suite', function() {
 				'desc':'use 5 demo',
 				'created_time':'2014-04-28',
 				'author':'alfred.sang',
-				'document':'...here document...'
+				'document':'...here document...',
+				'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InNoaXJlbjExMjhAMTI2LmNvbSIsInVzZXJuYW1lIjoic2FuZyIsInBhc3N3b3JkIjoic3NsMDQxNyIsImlhdCI6MTM5ODcwMjI5MjMyNCwiZXhwIjoxMzk4NzIwMjkyMzI0fQ.1yH674xKtk4i7TcmoGR-svxZTF7RbPxKPGuUIUyqkso'
 			})
 			.set('Accept', 'application/json')
 	        .end(function(res)
