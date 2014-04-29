@@ -1,5 +1,8 @@
 source 'https://ruby.taobao.org'
 
+gem "webrat"
+gem "capybara"
+
 # user
 # gem 'devise'
 
