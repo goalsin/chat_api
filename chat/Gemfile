@@ -1,4 +1,10 @@
-source 'https://rubygems.org'
+source 'https://ruby.taobao.org'
+
+# user
+# gem 'devise'
+
+# api token
+# gem 'simple_token_authentication'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
@@ -30,6 +36,10 @@ gem 'jbuilder', '~> 1.2'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0.beta'
 end
 
 # Use ActiveModel has_secure_password
