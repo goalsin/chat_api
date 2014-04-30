@@ -1,5 +1,6 @@
 source 'https://ruby.taobao.org'
 
+gem 'thin'
 gem 'rack-cors', require: 'rack/cors'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -10,6 +11,7 @@ gem 'pry'
 # user
 # gem 'devise'
 
+gem "protected_attributes"
 # api token
 # gem 'simple_token_authentication'
 

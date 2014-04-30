@@ -2,8 +2,9 @@ Chat::Application.routes.draw do
 	
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
+			get 'login' => 'users#login'
 			get 'test' => 'users#test'
-			
+			get 'list' => 'users#list'
       resources :users do
 				get 'index' => 'users#index'
 				
