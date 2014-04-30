@@ -1,6 +1,12 @@
 source 'https://ruby.taobao.org'
 
-gem 'protected_attributes'
+gem 'rack-cors', require: 'rack/cors'
+
+gem 'bcrypt-ruby', '~> 3.0.0'
+gem "kaminari", "~> 0.14.1"
+gem 'simplecov', :require => false, :group => :test
+
+gem 'pry'
 # user
 # gem 'devise'
 
@@ -47,6 +53,7 @@ group :development, :test do
 	gem "timecop"
 	
   gem 'rspec-rails', '~> 3.0.0.beta'
+	gem "factory_girl_rails", "~> 4.2.1"
 end
 
 # Use ActiveModel has_secure_password
