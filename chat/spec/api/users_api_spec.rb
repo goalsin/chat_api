@@ -3,7 +3,7 @@ require 'api/api_helper'
 require 'fakeweb'
 require 'timecop'
 
-describe 'Tasks API' do
+describe 'Users API' do
 
   before :each do
     # FactoryGirl.create :integration
@@ -13,10 +13,14 @@ describe 'Tasks API' do
   end
 
   # GET /tasks/:id
-  it 'should return a single task' do
-    # api_get "tasks/#1", {token: 'ddd'}
-    # response.status.should == 200
-
+  it 'should return a login' do
+    api_get "login", {email:'shiren1118@126.com',password:'000000'}
+    response.status.should == 200
+    h = JSON.parse(response.body)
+		puts h
+    h['status']['code'].should == 0
+    h['data'].length.should == 2
+    # h['data'].first["id"].should == doc1.id
     # project = JSON.parse(response.body)
  #    project['id'].should == Task.last.id
  #    project['project_id'].should == Task.last.project_id
