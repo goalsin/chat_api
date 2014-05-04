@@ -10,12 +10,15 @@ describe "TokenLogins" do
 		
     it "works! (now write some real specs)" do
       get '/api/v1/login?email=shiren1118@126.com&password=000000'
-			puts response.body
-			puts Rails.env
+			# puts response.body
+			# puts Rails.env
       expect(response.status).to be(200)
 			
-			token = MultiJson.decode(response.body)['token']
-		 	expect(token.length).to eq(32)
+			
+			# token = MultiJson.decode(response.body)['token']
+		 	# expect(token.length).not_to eq(32)
+			
+			# expect(token.lengthss).to eq(321)
     end
   end
 end

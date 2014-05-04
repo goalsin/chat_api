@@ -16,3 +16,12 @@
 /tmp
 
 ../railstutorial-china.org/
+
+
+# doc/
+*.swp
+*~
+.project
+.DS_Store
+.idea
+bundler_stubs/

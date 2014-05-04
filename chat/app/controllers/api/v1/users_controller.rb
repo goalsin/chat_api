@@ -5,12 +5,14 @@ module Api
 			skip_before_filter :restrict_access, only: [:list,:login]
 			
 			def login
-				@user = User.login_now(params[:email], params[:password])
+				@user = User.login_now(params[:email] , params[:password])
 				
 			end
 			
 			def index
 	      render json: {message: 'Resource not found'}
+	
+	
 	    end
 			
 			
