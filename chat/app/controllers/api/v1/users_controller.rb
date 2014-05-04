@@ -11,10 +11,7 @@ module Api
 			
 			def index
 	      render json: {message: 'Resource not found'}
-	
-	
 	    end
-			
 			
 			def test
 	      render json: {message: 'test not found'}
@@ -34,6 +31,6 @@ module Api
 				
 	    end
 			
-		end
-	end
+		end #end class
+	end #end V1
 end
