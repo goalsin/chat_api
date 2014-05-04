@@ -20,15 +20,6 @@ module Api
 			def list
 				@users = User.all
 				@user = User.first
-				# Jbuilder.encode do |json|
-# 				  
-# 
-# 					json.array! @people do |person|
-# 					  json.name person.email
-# 					  json.age person.password
-# 					end				  
-# 				end
-				
 	    end
 			
 		end #end class
