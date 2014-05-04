@@ -23,6 +23,8 @@ describe "TokenLogins" do
 end
 ```
 
+用let方法赋值，其实更好
+
 ### rspec生命周期
 
 mocha bdd basic测试代码
@@ -195,5 +197,19 @@ Spork is ready and listening on 8989!
 
 	gem 'launchy'
 	
-	
-	
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+or @see at [CONTRIBUTING.md](CONTRIBUTING.md)
+
+
+## License
+
+this gem is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+
