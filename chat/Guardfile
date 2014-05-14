@@ -39,7 +39,7 @@ guard :rspec, cmd: 'rspec -f html -o ./tmp/spec_results.html', launchy: './tmp/s
 	#   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
 	#   
 	watch('app/controllers/api/v1/users_controller.rb')  { "spec/requests/token_logins_spec.rb" }
-	 
+  watch('app/controllers/api/v1/courses_controller.rb')  { "spec/requests/course_spec.rb" }
   # Capybara features specs
   # watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/features/#{m[1]}_spec.rb" }
 

@@ -1,0 +1,2 @@
+module MTestsHelper
+end

@@ -2,15 +2,14 @@ require 'spec_helper'
 
 
 describe "TokenLogins" do
-  describe "GET /api/v1/create_course" do
+  describe "GET /api/v1/login" do
 
 		before(:each) do
 		  @user = User.create(:email=>'shiren1118@126.com',:password => "000000")
-			@token = @user.api_key.token
 		end
 		
-    it "创建课程! (now create course)" do
-      get "/api/v1/create_course?token=#{@token}"
+    it "works! (now write some real specs)" do
+      get '/api/v1/login?email=shiren1118@126.com&password=000000'
 			# puts response.body
 			# puts Rails.env
       expect(response.status).to be(200)

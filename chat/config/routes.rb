@@ -1,5 +1,7 @@
 Chat::Application.routes.draw do
 	
+  resources :m_tests
+
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
 			get 'login' => 'users#login'
@@ -10,8 +12,10 @@ Chat::Application.routes.draw do
 				
 			end
 			
+			
+			get 'create_course' => 'courses#create'
       resources :courses do
-				# get 'create' => 'courses#create'
+				# 
 				
 			end
 			

@@ -1,0 +1,29 @@
+<h1>Listing m_tests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Desc</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @m_tests.each do |m_test| %>
+      <tr>
+        <td><%= m_test.name %></td>
+        <td><%= m_test.desc %></td>
+        <td><%= link_to 'Show', m_test %></td>
+        <td><%= link_to 'Edit', edit_m_test_path(m_test) %></td>
+        <td><%= link_to 'Destroy', m_test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New M test', new_m_test_path %>
