@@ -8,8 +8,8 @@ module Api
 				
 			end
 			
-			
 			def create
+				# puts course_params
 				puts @current_user
 				c1 = Course.create(:name=>'first c')
 				c1.user = @current_user	
