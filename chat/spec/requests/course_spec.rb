@@ -15,18 +15,21 @@ describe "TokenLogins" do
 	    # t.text     "document"
 	    # t.string   "author"
 	    # t.integer  "user_id"
-			course = Course.new(
+
+			user_param = {
 				:name => 'how to study nodejs',
-				:author => 'alfred sang'
-			)
+				:desciption => 'alfred sang',
+				:document => 'document',
+				:author => 'author'
+			}.map{|k,v| "#{k}=#{v}"}.join('&').to_s
+		
+			url = URI.encode("/api/v1/create_course?token=#{@token}&#{user_param}" )
 			
+      get url
 			
-			
-      get "/api/v1/create_course?token=#{@token}" 
 			# puts response.body
 			# puts Rails.env
       expect(response.status).to be(200)
-			
 			
 			# token = MultiJson.decode(response.body)['token']
 		 	# expect(token.length).not_to eq(32)

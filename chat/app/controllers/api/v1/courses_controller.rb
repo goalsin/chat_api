@@ -1,7 +1,12 @@
 module Api
 	module V1
 		class CoursesController < ApplicationController
-			
+	    # t.string   "name"
+	    # t.text     "desciption"
+	    # t.text     "document"
+	    # t.string   "author"
+	    # t.integer  "user_id"
+
 			before_filter :restrict_access 
 			
 			def new
@@ -11,7 +16,13 @@ module Api
 			def create
 				# puts course_params
 				puts @current_user
-				c1 = Course.create(:name=>'first c')
+				c1 = Course.create(
+					:name=>params[:name],
+					:desciption=>params[:desciption],
+					:document=>params[:document],
+					:author=>params[:author]
+				)
+				
 				c1.user = @current_user	
 				r = c1.save
 				
