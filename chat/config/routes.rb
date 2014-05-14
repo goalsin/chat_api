@@ -9,6 +9,12 @@ Chat::Application.routes.draw do
 				get 'index' => 'users#index'
 				
 			end
+			
+      resources :courses do
+				# get 'create' => 'courses#create'
+				
+			end
+			
 		end
 	end
 	

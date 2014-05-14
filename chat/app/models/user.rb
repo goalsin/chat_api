@@ -2,7 +2,9 @@ class User < ActiveRecord::Base
 	attr_accessible :email, :password
 	
 	has_one :api_key, dependent: :destroy
+	has_many :courses, dependent: :destroy
 
+	
   after_create :create_api_key
 	
 	def self.login_now(email,password)

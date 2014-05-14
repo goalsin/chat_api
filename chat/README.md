@@ -9,9 +9,31 @@
 - 班级内聊天
 
 
-1. 一个用户有多个课程
+1. 一个用户有多个课程course
 1. 一个课程有多个班级
 1. 一个班级有多个学生
+
+
+### course
+
+- 课程名称name
+- 详情desciption
+- 作者author
+- 教案document
+
+
+rails g model course name:string desciption:text document:text author:string
+
+```
+一个用户有多个课程
+一个课程有多个作者
+一个作者有多个课程
+```
+
+- 用户参加的课程
+- 用户创建的课程
+
+
 
 
 ## 测试
