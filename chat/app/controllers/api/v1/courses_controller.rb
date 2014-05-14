@@ -34,6 +34,10 @@ module Api
 			end
 			
 			
+		  def index
+		    @courses = Course.all
+		  end
+			
 		end #end class
 	end #end V1
 end

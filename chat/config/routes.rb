@@ -14,6 +14,9 @@ Chat::Application.routes.draw do
 			
 			
 			get 'create_course' => 'courses#create'
+			
+			get 'courses' => 'courses#index'
+			
       resources :courses do
 				# 
 				
