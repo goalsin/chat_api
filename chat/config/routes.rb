@@ -8,16 +8,14 @@ Chat::Application.routes.draw do
 			get 'test' => 'users#test'
 			get 'list' => 'users#list'
       resources :users do
-				get 'index' => 'users#index'
-				
+				get 'index' => 'users#index'	
 			end
 			
-			
 			get 'create_course' => 'courses#create'
-			
 			get 'courses' => 'courses#index'
-			
 			get 'courses/:id' => 'courses#get'
+		
+			get 'create_tclass/:courseid' => 'tclasses#create'
 			
       resources :courses do
 				# 

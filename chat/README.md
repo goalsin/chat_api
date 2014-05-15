@@ -35,6 +35,8 @@ rails g model course name:string desciption:text document:text author:string
 - 用户参加的课程
 - 用户创建的课程
 
+rails g model tclass name:string start:string end:string desc:text count:integer
+
 
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514030222) do
+ActiveRecord::Schema.define(version: 20140515110754) do
 
   create_table "api_keys", force: true do |t|
     t.string   "token"
@@ -43,6 +43,19 @@ ActiveRecord::Schema.define(version: 20140514030222) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tclasses", force: true do |t|
+    t.string   "name"
+    t.string   "start"
+    t.string   "end"
+    t.text     "desc"
+    t.integer  "count"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tclasses", ["course_id"], name: "index_tclasses_on_course_id"
 
   create_table "users", force: true do |t|
     t.string   "email"

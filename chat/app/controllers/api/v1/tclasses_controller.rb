@@ -1,6 +1,6 @@
 module Api
 	module V1
-		class CoursesController < ApplicationController
+		class TclassesController < ApplicationController
 	    # t.string   "name"
 	    # t.text     "desciption"
 	    # t.text     "document"
@@ -37,7 +37,6 @@ module Api
 			def get
 				@course = Course.find(params[:id])
 				@user = @course.user;
-				@tclass = @course.tclasses;
 			end
 			
 			
