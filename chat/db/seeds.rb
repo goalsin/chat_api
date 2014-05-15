@@ -8,3 +8,9 @@
 
 User.create(:email => 'shiren1118@126.com',:password => '000000')
 
+Course.create( 
+	:name => 'how to study nodejs',
+	:desciption => 'alfred sang',
+	:document => 'document',
+	:author => 'author'
+);
