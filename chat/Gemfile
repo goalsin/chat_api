@@ -1,7 +1,9 @@
-source 'https://ruby.taobao.org'
+#source 'https://ruby.taobao.org'
+source 'https://rubygems.org'
 
 gem 'thin'
 gem 'rack-cors', require: 'rack/cors'
+gem 'rb-readline'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem "kaminari", "~> 0.14.1"
@@ -58,7 +60,7 @@ group :development, :test do
 	gem "rspec", "~> 3.0.0.beta2"
   gem 'rspec-rails', '~> 3.0.0.beta'
 	gem "factory_girl_rails", "~> 4.2.1"
-	
+
 	gem 'spork-rails', '4.0.0'
   gem 'guard-spork', '1.5.0'
   gem 'childprocess'
