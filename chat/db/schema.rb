@@ -24,9 +24,12 @@ ActiveRecord::Schema.define(version: 20140514030222) do
 
   create_table "courses", force: true do |t|
     t.string   "name"
-    t.text     "desciption"
+    t.string   "image"
+    t.text     "desc"
     t.text     "document"
     t.string   "author"
+    t.integer  "week"
+    t.float    "price"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

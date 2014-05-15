@@ -34,6 +34,11 @@ module Api
 			end
 			
 			
+			def get
+				@course = Course.find(params[:id])
+			end
+			
+			
 		  def index
 		    @courses = Course.all
 		  end
