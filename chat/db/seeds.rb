@@ -13,4 +13,12 @@ Course.create(
 	:desciption => 'alfred sang',
 	:document => 'document',
 	:author => 'author'
-);
+)
+
+Course.create( 
+	:name => 'how to study nodejs',
+	:desciption => 'alfred sang',
+	:document => 'document',
+	:author => 'author'
+)
+
