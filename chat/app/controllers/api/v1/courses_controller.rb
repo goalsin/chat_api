@@ -36,6 +36,7 @@ module Api
 			
 			def get
 				@course = Course.find(params[:id])
+				@user = @course.user;
 			end
 			
 			
