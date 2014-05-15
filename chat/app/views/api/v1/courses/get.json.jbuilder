@@ -1,2 +1,1 @@
-json.data  @courses
-json.count @courses.length
+json.data  @course
